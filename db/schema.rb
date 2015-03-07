@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305232220) do
+ActiveRecord::Schema.define(version: 20150306000929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,9 +21,22 @@ ActiveRecord::Schema.define(version: 20150305232220) do
   end
 
   create_table "ideas", force: :cascade do |t|
-    t.text "title"
-    t.text "body"
+    t.text    "title"
+    t.text    "body"
+    t.integer "user_id"
+    t.integer "category_id"
   end
+
+  add_index "ideas", ["category_id"], name: "index_ideas_on_category_id", using: :btree
+  add_index "ideas", ["user_id"], name: "index_ideas_on_user_id", using: :btree
+
+  create_table "ideas_images", id: false, force: :cascade do |t|
+    t.integer "idea_id",  null: false
+    t.integer "image_id", null: false
+  end
+
+  add_index "ideas_images", ["idea_id", "image_id"], name: "index_ideas_images_on_idea_id_and_image_id", using: :btree
+  add_index "ideas_images", ["image_id", "idea_id"], name: "index_ideas_images_on_image_id_and_idea_id", using: :btree
 
   create_table "images", force: :cascade do |t|
     t.text "source"
@@ -35,9 +48,15 @@ ActiveRecord::Schema.define(version: 20150305232220) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.text "email_address"
-    t.text "password_digest"
-    t.text "username"
+    t.text    "email_address"
+    t.text    "password_digest"
+    t.text    "username"
+    t.integer "role_id"
   end
 
+  add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
+
+  add_foreign_key "ideas", "categories"
+  add_foreign_key "ideas", "users"
+  add_foreign_key "users", "roles"
 end
