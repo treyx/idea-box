@@ -35,19 +35,3 @@ RSpec.describe User, :type => :model do
     expect(user.role).to eq("user")
   end
 end
-
-
-
-
-
-
-
-
-
-
-#assert password
-#assert email unique
-#assert username unique
-#assert password contains a number
-#assert default role or can be admin
-#
