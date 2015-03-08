@@ -46,7 +46,7 @@ RSpec.feature "User Logs In", :type => :feature do
       expect(page).to have_content("Welcome to the Admin Control Panel")
     end
 
-    scenario "sees a link to edit categories" do
+    scenario "sees a link to manage categories" do
       admin = User.create(username: "example", email_address: "example@example.com", password: "password", role: 1)
       visit login_path
       fill_in "session[username]", with: admin.username
@@ -56,6 +56,17 @@ RSpec.feature "User Logs In", :type => :feature do
       click_link_or_button "Manage Categories"
       expect(current_path).to eq(admin_categories_path)
       expect(page).to have_content("Categories")
+    end
+      scenario "sees a link to manage images" do
+      admin = User.create(username: "example", email_address: "example@example.com", password: "password", role: 1)
+      visit login_path
+      fill_in "session[username]", with: admin.username
+      fill_in "session[password]", with: admin.password
+      click_link_or_button "Log In"
+      expect(page).to have_content("Manage Images")
+      click_link_or_button "Manage Images"
+      expect(current_path).to eq(admin_images_path)
+      expect(page).to have_content("Images")
     end
   end
 

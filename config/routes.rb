@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: "dashboard#index"
     resources :categories, :only => [:index]
+    resources :images, :only => [:index]
   end
 end
