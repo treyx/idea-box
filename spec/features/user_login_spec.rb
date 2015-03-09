@@ -79,7 +79,7 @@ RSpec.feature "User Logs In", :type => :feature do
       expect(current_path).to eq(admin_images_path)
       expect(page).to have_content("Images")
     end
-    scenario "user can not view other users pages" do
+    scenario "admin can view other users pages" do
       admin = User.create(username: 'admin', email_address: "example@example.com", password: 'test', role: 1)
       user2 = User.create(username: 'example1', email_address: "example1@example.com", password: 'testing')
       visit login_path
